@@ -26,15 +26,15 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.get('/', (request, response) => {
-    let sql1 = `SELECT dosen.id_dosen, dosen.nama_lengkap, NVL(SUM(CASE WHEN mahasiswa.gender = 'L' THEN 1 END),0) AS L,
-    NVL(SUM(CASE WHEN mahasiswa.gender = 'P' THEN 1 END),0) AS P FROM mahasiswa
-    INNER JOIN dosen ON dosen.id_dosen = mahasiswa.dosen_wali
-    GROUP BY dosen.nama_lengkap, dosen.id_dosen
-    ORDER BY dosen.id_dosen;`
+    let sql1 = `SELECT mahasiswa.nim AS nim, dosen.id_dosen,mahasiswa.nama AS nama, dosen.nama_lengkap AS dosen, mahasiswa.gender AS gender ,mahasiswa.tempat_lahir AS tempat_lahir, mahasiswa.tanggal AS tanggal_lahir FROM dosen INNER JOIN mahasiswa ON  dosen.id_dosen = mahasiswa.dosen_wali;`
     connection.query(sql1, (err,data1)=>{
-        let sql2 = `SELECT mahasiswa.nim AS nim, dosen.id_dosen,mahasiswa.nama AS nama, dosen.nama_lengkap AS dosen, mahasiswa.gender AS gender ,mahasiswa.tempat_lahir AS tempat_lahir, mahasiswa.tanggal AS tanggal_lahir FROM dosen INNER JOIN mahasiswa ON  dosen.id_dosen = mahasiswa.dosen_wali;`
-        connection.query(sql2, (err, data) => {
-            request.session.loggedin ? response.render('index', { title: "Admin Panel", list: data, dosens: data1 }) : response.redirect('login')
+        let sql2 = `SELECT dosen.id_dosen, dosen.nama_lengkap, COALESCE(SUM(CASE WHEN mahasiswa.gender = 'L' THEN 1 END),0) AS L,
+        COALESCE(SUM(CASE WHEN mahasiswa.gender = 'P' THEN 1 END), 0) AS P FROM mahasiswa
+        INNER JOIN dosen ON dosen.id_dosen = mahasiswa.dosen_wali
+        GROUP BY dosen.nama_lengkap, dosen.id_dosen
+        ORDER BY dosen.id_dosen;`
+        connection.query(sql2, (err, data2) => {
+            request.session.loggedin ? response.render('index', { dosen: data2 , title: "Admin Panel", list: data1}) : response.redirect('login')
         })
     })
 })
