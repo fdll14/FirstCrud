@@ -1,20 +1,33 @@
-const mysql = require('mysql');
-
+const mysql = require ('mysql');
+const connection;
 const { DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE } = process.env;
-console.log(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-const db = mysql.createConnection({
+const get_SQL_Connection = function () {
+  connection = mysql.createConnection ({
     host: DB_HOST,
     user: DB_USERNAME,
     password: DB_PASSWORD,
     database: DB_DATABASE
-});
-
-db.connect((err) => {
-    if (!err) {
-        console.log("connect");
-    }else{
-        console.log("not Connect");
+  });
+  // When connected
+  connection.connect (function (err) {
+    if (err) {
+      console.log ("SQL CONNECT ERROR&gt;&gt;" + err);
+      setTimeout (get_SQL_Connection, 2000);// Retry when connection fails
+    } else {
+      console.log ("SQL CONNECT SUCCESSFUL.");
     }
-})
-
-module.exports = db 
+  });
+  // In case of error
+  connection.on ('error', function (err) {
+    console.log ("SQL CONNECTION ERROR&gt;&gt;" + err);
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+      console.log ('=&gt;RECONECT ...');
+      // reconnect
+      get_SQL_Connection ();
+    } else {
+      throw err;
+    }
+  });
+}
+  get_SQL_Connection ();
+  module.exports = connection;
