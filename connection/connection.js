@@ -1,5 +1,5 @@
 const mysql = require ('mysql');
-const connection;
+let connection;
 const { DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE } = process.env;
 const get_SQL_Connection = function () {
   connection = mysql.createConnection ({
