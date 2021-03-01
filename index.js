@@ -8,6 +8,17 @@ const moment = require("moment");
 const connection = require("./connection/connection")
 const app = express();
 
+function establishConnection() {
+    var a = connection();
+    a.then(a => console.log("success"))
+   .catch(err => {
+       console.error("Retrying");
+       // I suggest using some variable to avoid the infinite loop.
+       setTimeout(establishConnection, 2000);
+   });
+};
+
+establishConnection();
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
