@@ -152,9 +152,9 @@
     <div class="container">
         <div class="card">
             <h2>Login</h2>
-            <form method="post" action="/auth" id="login">
-                <input type="text" placeholder="Username" id="username" name="username" class="form-input" required>
-                <input type="password" placeholder="Password" id="password" name="password" class="form-input" required>
+            <form method="post" action="/auth" id="login" autocomplete="off">
+                <input type="text" placeholder="Username" id="username" name="username" class="form-input" required oninvalid="setCustomValidity('Please Enter Your Username')" oninput="setCustomValidity('')" autocomplete="false">
+                <input type="password" placeholder="Password" id="password" name="password" class="form-input" required oninvalid="setCustomValidity('Please Enter Your Password')" oninput="setCustomValidity('')">
 
                 <button type="submit" name="login" class="btn btn-primary btn-block" id="submit">
                     Login

@@ -54,7 +54,8 @@ app.post('/auth', function (request, response) {
                 request.session.loggedin = true;
                 response.redirect('/');
             } else {
-                response.send('Incorrect Username and/or Password!');
+                response.setHeader('Content-type','text/html')
+                response.send('Incorrect Username and/or Password!<br><br> <a class="nav-link" style= "text-decoration: none; background-color: #25A9EF; border: none;color: white; padding: 15px 20px; text-align: center; display: inline-block; font-size: 14px;border-radius: 2px;" href="/login">Back Page Login</a>');
             }
             response.end();
         });
