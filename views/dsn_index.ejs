@@ -9,7 +9,10 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
         integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <title>
         <%= title %>
     </title>
@@ -76,9 +79,11 @@
                             <td class="align-middle">
                                 <%= dosen.nama_lengkap%>
                             </td>
-                            <td class="align-middle" style="width: 30%;"><a href="/editdsn/<%= dosen.id_dosen%>" class="btn btn-warning mr-1"
-                                    style="width: 100px;" role="button">Edit</a> <a href="/hapusdsn/<%= dosen.id_dosen%>"
-                                    class="btn btn-danger" style="width: 100px;" role="button">Hapus</a></td>
+                            <td class="align-middle" style="width: 30%;"><a href="/editdsn/<%= dosen.id_dosen%>"
+                                    class="btn btn-warning mr-1" style="width: 100px;" role="button" onclick="return confirm('Are you sure, you want to Edit it?')">Edit</a> <a
+                                    href="/hapusdsn/<%= dosen.id_dosen%>" class="btn btn-danger" style="width: 100px;"
+                                    role="button"
+                                    onclick="return confirm('Are you sure, you want to delete it?')">Hapus</a></td>
                         </tr>
                         <%})%>
                 </tbody>
@@ -87,6 +92,7 @@
         </div>
 
     </div>
+
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
