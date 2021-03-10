@@ -92,8 +92,8 @@
                                 <%= moment(maha.tanggal).format('YYYY-MM-DD')%>
                             </td>
                             <td class="align-middle"><a href="/editmhs/<%= maha.nim%>" class="btn btn-warning mr-1"
-                                    style="width: 100px;" role="button">Edit</a> <a href="/hapusmhs/<%= maha.nim%>"
-                                    class="btn btn-danger" style="width: 100px;" role="button">Hapus</a></td>
+                                    style="width: 100px;" role="button" onclick="return confirm('Are you sure, you want to edit it?')">Edit</a> <a href="/hapusmhs/<%= maha.nim%>"
+                                    class="btn btn-danger" style="width: 100px;" role="button" onclick="return confirm('Are you sure, you want to delete it?')">Hapus</a></td>
                         </tr>
                         <%})%>
                 </tbody>
